@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 //import './index.css';
 //import fetchArticlesWithQuery from "./services/api";
 import ContentLoader from 'react-content-loader'
-import fetchArticlesWithQuery from "./services/api";
+import api from "./services/api";
 
 const ArticleList = ({ articles }) => (
   <ul>
@@ -29,7 +29,7 @@ class App extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const articles = await fetchArticlesWithQuery("react")
+      const articles = await api.fetchArticlesWithQuery("react")
       this.setState({ articles });
     } catch (error) {
       this.setState({ error });
