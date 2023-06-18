@@ -1,64 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from 'react-dom/client';
-//import App from 'components/App';
-//import './index.css';
-//import fetchArticlesWithQuery from "./services/api";
-import ContentLoader from 'react-content-loader'
-import api from "./services/api";
+import { useState } from "react";
 
-const ArticleList = ({ articles }) => (
-  <ul>
-    {articles.map(({ objectID, url, title }) => (
-      <li key={objectID}>
-        <a href={url} target="_blank" rel="noreferrer noopener">
-          {title}
-        </a>
-      </li>
-    ))}
-  </ul>
-);
+import { useMemo } from "react";
 
-class App extends Component {
-  state = {
-    articles: [],
-    isLoading: false,
-    error: null,
-  };
+const App = ({ someProp }) => {
+  const [planets,] = useState(["Earth", "Mars", "Jupiter", "Venus"]);
+  const [query,] = useState("");
+  const [clicks, setClicks] = useState(0);
 
-  async componentDidMount() {
-    this.setState({ isLoading: true });
+  const filteredPlanets = useMemo(
+    () => planets.filter(planet => planet.includes(query)),
+    [planets, query]
+  );
 
-    try {
-      const articles = await api.fetchArticlesWithQuery("react")
-      this.setState({ articles });
-    } catch (error) {
-      this.setState({ error });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
-
-
-  render() {
-    const { articles, isLoading, error } = this.state;
-    return (
+  return (
+    <div>
+      <div>Some prop: {someProp}</div>
+      <button onClick={() => setClicks(clicks + 1)}>
+        Number of clicks: {clicks}
+      </button>
       <div>
-        {error && <p>Whoops, something went wrong: {error.message}</p>}
-        {isLoading ? (
-          <ContentLoader viewBox="0 0 380 70">
-            {/* Only SVG shapes */}
-            <rect x="0" y="0" rx="5" ry="5" width="70" height="70" />
-            <rect x="80" y="17" rx="4" ry="4" width="300" height="13" />
-            <rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
-          </ContentLoader>
-        ) : (
-          <ArticleList articles={articles} />
-        )}
+        {filteredPlanets.map(planet => (
+          <div key={planet}>{planet}</div>
+        ))}
       </div>
-    );
-  }
-}
-
+    </div>
+  );
+};
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
