@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { About } from '../pages/About';
 import { Home } from '../pages/Home';
+import { ProductDetails } from '../pages/ProductDetails';
 import { Products } from '../pages/Products';
-import { NotFound } from '../pages/NotFound';
 import { Container, Header, Logo, Link } from './App.styled';
 
 export const App = () => {
@@ -27,7 +27,7 @@ export const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
       </Routes>
     </Container>
   );
